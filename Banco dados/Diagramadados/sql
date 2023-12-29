@@ -1,0 +1,454 @@
+- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Tempo de geração: 28/12/2023 às 05:17
+-- Versão do servidor: 10.4.28-MariaDB
+-- Versão do PHP: 8.2.4
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Banco de dados: `ag_ncia_de_viagem`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `cidade`
+--
+
+CREATE TABLE `cidade` (
+  `Cidade_id` int(11) NOT NULL,
+  `Nomecidade` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `cliente`
+--
+
+CREATE TABLE `cliente` (
+  `Cliente_id` int(11) NOT NULL,
+  `Nome` varchar(255) NOT NULL,
+  `Endereço` varchar(250) NOT NULL,
+  `Email` varchar(250) NOT NULL,
+  `Telefone` varchar(50) NOT NULL,
+  `Cartãocrédito` varchar(50) NOT NULL,
+  `DataNascimento` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `cliente_feedback`
+--
+
+CREATE TABLE `cliente_feedback` (
+  `Cliente_id` int(11) NOT NULL,
+  `Feedback_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `compra`
+--
+
+CREATE TABLE `compra` (
+  `Compra_id` int(11) NOT NULL,
+  `DataCompra` date NOT NULL,
+  `ValorTotal` float NOT NULL,
+  `MétodoPagamento` varchar(250) NOT NULL,
+  `Cliente_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `contato`
+--
+
+CREATE TABLE `contato` (
+  `Contato_id` int(11) NOT NULL,
+  `Contato_tipo_tel` varchar(50) NOT NULL,
+  `Contato_tipo_ema` varchar(50) NOT NULL,
+  `Cliente_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `destino`
+--
+
+CREATE TABLE `destino` (
+  `Cidade_id` int(11) NOT NULL,
+  `Viagem_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `documentação`
+--
+
+CREATE TABLE `documentação` (
+  `Documentação_id` int(11) NOT NULL,
+  `Tipodocumentação` varchar(250) NOT NULL,
+  `Númerodocunto` int(11) NOT NULL,
+  `Dataexpiração` date NOT NULL,
+  `Cliente_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `feedback`
+--
+
+CREATE TABLE `feedback` (
+  `Feedback_id` int(11) NOT NULL,
+  `Avaliação` text NOT NULL,
+  `Comentários` text NOT NULL,
+  `Datafeedback` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `promoção`
+--
+
+CREATE TABLE `promoção` (
+  `Promoçao_id` int(11) NOT NULL,
+  `Nome` varchar(50) NOT NULL,
+  `Descrição` text NOT NULL,
+  `Descontopercentua` float NOT NULL,
+  `Datainício` date NOT NULL,
+  `Datafim` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `reserva`
+--
+
+CREATE TABLE `reserva` (
+  `Reserva_id` int(11) NOT NULL,
+  `NúmeroPessoas` int(11) NOT NULL,
+  `StatusPagamento` tinyint(1) NOT NULL,
+  `DataReserva` date DEFAULT NULL,
+  `Cliente_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `reserva_cidade`
+--
+
+CREATE TABLE `reserva_cidade` (
+  `Reserva_id` int(11) NOT NULL,
+  `Cidade_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `tem_promoção`
+--
+
+CREATE TABLE `tem_promoção` (
+  `Promoçao_id` int(11) NOT NULL,
+  `Viagem_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `viagem`
+--
+
+CREATE TABLE `viagem` (
+  `Viagem_id` int(11) NOT NULL,
+  `Destino` varchar(250) NOT NULL,
+  `DataPartita` date NOT NULL,
+  `Preço` float NOT NULL,
+  `Duração` date NOT NULL,
+  `Avaliação` varchar(250) NOT NULL,
+  `Compra_id` int(11) NOT NULL,
+  `Cliente_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `viagem_feedback`
+--
+
+CREATE TABLE `viagem_feedback` (
+  `Feedback_id` int(11) NOT NULL,
+  `Viagem_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `viagem_reserva`
+--
+
+CREATE TABLE `viagem_reserva` (
+  `Reserva_id` int(11) NOT NULL,
+  `Viagem_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Índices para tabelas despejadas
+--
+
+--
+-- Índices de tabela `cidade`
+--
+ALTER TABLE `cidade`
+  ADD PRIMARY KEY (`Cidade_id`);
+
+--
+-- Índices de tabela `cliente`
+--
+ALTER TABLE `cliente`
+  ADD PRIMARY KEY (`Cliente_id`),
+  ADD UNIQUE KEY `Email` (`Email`);
+
+--
+-- Índices de tabela `cliente_feedback`
+--
+ALTER TABLE `cliente_feedback`
+  ADD KEY `Feedback_id_fk` (`Feedback_id`) USING BTREE,
+  ADD KEY `Cliente_id_fk` (`Cliente_id`);
+
+--
+-- Índices de tabela `compra`
+--
+ALTER TABLE `compra`
+  ADD PRIMARY KEY (`Compra_id`),
+  ADD KEY `Cliente_id_fk` (`Cliente_id`) USING BTREE;
+
+--
+-- Índices de tabela `contato`
+--
+ALTER TABLE `contato`
+  ADD PRIMARY KEY (`Contato_id`),
+  ADD KEY `Cliente_id_fk` (`Cliente_id`) USING BTREE;
+
+--
+-- Índices de tabela `destino`
+--
+ALTER TABLE `destino`
+  ADD KEY `Cidide_id_fk` (`Cidade_id`);
+
+--
+-- Índices de tabela `documentação`
+--
+ALTER TABLE `documentação`
+  ADD PRIMARY KEY (`Documentação_id`),
+  ADD KEY `Cliente_id_fk` (`Cliente_id`) USING BTREE;
+
+--
+-- Índices de tabela `feedback`
+--
+ALTER TABLE `feedback`
+  ADD PRIMARY KEY (`Feedback_id`);
+
+--
+-- Índices de tabela `promoção`
+--
+ALTER TABLE `promoção`
+  ADD PRIMARY KEY (`Promoçao_id`);
+
+--
+-- Índices de tabela `reserva`
+--
+ALTER TABLE `reserva`
+  ADD PRIMARY KEY (`Reserva_id`),
+  ADD KEY `Cliente_id_fk` (`Cliente_id`);
+
+--
+-- Índices de tabela `reserva_cidade`
+--
+ALTER TABLE `reserva_cidade`
+  ADD KEY `Reserva_id_k` (`Reserva_id`),
+  ADD KEY `Cidide_id_fk` (`Cidade_id`) USING BTREE;
+
+--
+-- Índices de tabela `tem_promoção`
+--
+ALTER TABLE `tem_promoção`
+  ADD KEY `Promoção_id_fk` (`Promoçao_id`),
+  ADD KEY `Viagem_id_fk` (`Viagem_id`) USING BTREE;
+
+--
+-- Índices de tabela `viagem`
+--
+ALTER TABLE `viagem`
+  ADD PRIMARY KEY (`Viagem_id`),
+  ADD KEY `Cliente_id_fk` (`Cliente_id`),
+  ADD KEY `Compra_id_fk` (`Compra_id`);
+
+--
+-- Índices de tabela `viagem_feedback`
+--
+ALTER TABLE `viagem_feedback`
+  ADD KEY `Viagem_id_fk` (`Viagem_id`),
+  ADD KEY `Feedback_id_fk` (`Feedback_id`);
+
+--
+-- Índices de tabela `viagem_reserva`
+--
+ALTER TABLE `viagem_reserva`
+  ADD KEY `Reserva_id_fk` (`Reserva_id`),
+  ADD KEY `Viagem_id_fk` (`Viagem_id`);
+
+--
+-- AUTO_INCREMENT para tabelas despejadas
+--
+
+--
+-- AUTO_INCREMENT de tabela `cidade`
+--
+ALTER TABLE `cidade`
+  MODIFY `Cidade_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `cliente`
+--
+ALTER TABLE `cliente`
+  MODIFY `Cliente_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `compra`
+--
+ALTER TABLE `compra`
+  MODIFY `Compra_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `documentação`
+--
+ALTER TABLE `documentação`
+  MODIFY `Documentação_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `feedback`
+--
+ALTER TABLE `feedback`
+  MODIFY `Feedback_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `promoção`
+--
+ALTER TABLE `promoção`
+  MODIFY `Promoçao_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `reserva`
+--
+ALTER TABLE `reserva`
+  MODIFY `Reserva_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `viagem`
+--
+ALTER TABLE `viagem`
+  MODIFY `Viagem_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Restrições para tabelas despejadas
+--
+
+--
+-- Restrições para tabelas `cliente_feedback`
+--
+ALTER TABLE `cliente_feedback`
+  ADD CONSTRAINT `cliente_feedback_ibfk_1` FOREIGN KEY (`Cliente_id`) REFERENCES `cliente` (`Cliente_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `cliente_feedback_ibfk_2` FOREIGN KEY (`Feedback_id`) REFERENCES `feedback` (`Feedback_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Restrições para tabelas `compra`
+--
+ALTER TABLE `compra`
+  ADD CONSTRAINT `compra_ibfk_1` FOREIGN KEY (`Cliente_id`) REFERENCES `cliente` (`Cliente_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Restrições para tabelas `contato`
+--
+ALTER TABLE `contato`
+  ADD CONSTRAINT `contato_ibfk_1` FOREIGN KEY (`Cliente_id`) REFERENCES `cliente` (`Cliente_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Restrições para tabelas `destino`
+--
+ALTER TABLE `destino`
+  ADD CONSTRAINT `destino_ibfk_1` FOREIGN KEY (`Cidade_id`) REFERENCES `cidade` (`Cidade_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Restrições para tabelas `documentação`
+--
+ALTER TABLE `documentação`
+  ADD CONSTRAINT `documentação_ibfk_1` FOREIGN KEY (`Cliente_id`) REFERENCES `cliente` (`Cliente_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Restrições para tabelas `reserva`
+--
+ALTER TABLE `reserva`
+  ADD CONSTRAINT `Cliente_id_fk` FOREIGN KEY (`Cliente_id`) REFERENCES `cliente` (`Cliente_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Restrições para tabelas `reserva_cidade`
+--
+ALTER TABLE `reserva_cidade`
+  ADD CONSTRAINT `reserva_cidade_ibfk_1` FOREIGN KEY (`Reserva_id`) REFERENCES `reserva` (`Reserva_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `reserva_cidade_ibfk_2` FOREIGN KEY (`Cidade_id`) REFERENCES `cidade` (`Cidade_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Restrições para tabelas `tem_promoção`
+--
+ALTER TABLE `tem_promoção`
+  ADD CONSTRAINT `tem_promoção_ibfk_1` FOREIGN KEY (`Promoçao_id`) REFERENCES `promoção` (`Promoçao_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `tem_promoção_ibfk_2` FOREIGN KEY (`Viagem_id`) REFERENCES `viagem` (`Viagem_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Restrições para tabelas `viagem`
+--
+ALTER TABLE `viagem`
+  ADD CONSTRAINT `viagem_ibfk_1` FOREIGN KEY (`Cliente_id`) REFERENCES `cliente` (`Cliente_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `viagem_ibfk_2` FOREIGN KEY (`Compra_id`) REFERENCES `compra` (`Compra_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Restrições para tabelas `viagem_feedback`
+--
+ALTER TABLE `viagem_feedback`
+  ADD CONSTRAINT `viagem_feedback_ibfk_1` FOREIGN KEY (`Feedback_id`) REFERENCES `feedback` (`Feedback_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `viagem_feedback_ibfk_2` FOREIGN KEY (`Viagem_id`) REFERENCES `viagem` (`Viagem_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Restrições para tabelas `viagem_reserva`
+--
+ALTER TABLE `viagem_reserva`
+  ADD CONSTRAINT `viagem_reserva_ibfk_1` FOREIGN KEY (`Reserva_id`) REFERENCES `reserva` (`Reserva_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `viagem_reserva_ibfk_2` FOREIGN KEY (`Viagem_id`) REFERENCES `viagem` (`Viagem_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
