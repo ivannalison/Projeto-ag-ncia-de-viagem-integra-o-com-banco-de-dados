@@ -1,0 +1,50 @@
+body{
+    background-image:
+    url("R.jpg");
+background-size: cover;
+background-repeat: no-repeat ; 
+} 
+p{
+    color: white;
+}
+h4{
+    color: white;
+}
+body{
+    margin-left: 40px; margin-right: 40px;
+}
+#menu{
+    background-color: rgb(80, 82, 219);padding: 19px;
+}
+.nat{
+    color: rgb(255, 153, 0);font-size: 400% ;text-align: justify;
+}
+.um{
+  color: White
+}
+.navbar-brand {
+    font-size: 1.5 rem;
+    font-weight: bold;
+}
+.navbar-brand {
+    font-size: 1.5 rem;
+    font-weight: bold;
+}
+
+.navbar-nav .nav-link {
+    color: rgba(47, 34, 104, 0);
+}
+
+.text-primeiro{
+    color:white ;
+}
+.text-segundo{
+    color: dimgray;
+}
+
+
+.imagem-container img {
+    width: 100%; 
+
+}
+
